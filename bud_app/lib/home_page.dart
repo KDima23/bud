@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-//import 'package:bud_app/app_bar.dart';
-
-//import 'package:bud_app/flexible_app_bar.dart';
+import 'package:bud_app/app_bar.dart';
+import 'package:bud_app/flexible_app_bar.dart';
 
 //import 'bottom_nav_bar_home.dart';
 

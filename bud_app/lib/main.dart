@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bud_app/forgot_password_page.dart';
 import 'login_page.dart';
 import 'home_page.dart';
-//import 'signup_page.dart';
+import 'signup_page.dart';
 //import 'package:bud_app/settings_page.dart';
 //import 'analytic_dashboard_page.dart';
 //import 'invoice_scaner_page.dart';
@@ -12,7 +12,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
-//    SignUpPage.tag: (context) => SignUpPage(),
+    SignUpPage.tag: (context) => SignUpPage(),
     HomePage.tag: (context) => HomePage(),
     ForgotPasswordPage.tag: (context) => ForgotPasswordPage(),
 //    SettingsPage.tag: (context) => SettingsPage(),

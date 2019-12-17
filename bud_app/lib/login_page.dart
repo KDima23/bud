@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bud_app/forgot_password_page.dart';
 import 'package:bud_app/home_page.dart';
-//import 'package:flutter_app/signup_page.dart';
+import 'package:bud_app/signup_page.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             FlatButton(
                 onPressed: () {
-//                  Navigator.of(context).pushNamed(SignUpPage.tag);
+                  Navigator.of(context).pushNamed(SignUpPage.tag);
                 },
                 child: Text(
                   "Sign up?",

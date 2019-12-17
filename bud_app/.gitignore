@@ -29,6 +29,9 @@
 .pub/
 /build/
 
+#JSON
+**/android/app/google-services.json
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
