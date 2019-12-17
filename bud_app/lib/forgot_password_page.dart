@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/login_page.dart';
+import 'package:bud_app/login_page.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   static String tag = 'forgot-password-page';
