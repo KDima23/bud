@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppBarH extends StatelessWidget {
-  final double barHeight = 60.0;
+  final double barHeight = 230.0;
 
   const AppBarH();
 

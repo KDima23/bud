@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FlexibleAppBarH extends StatelessWidget {
-  final double barHeightF = 60.0;
+  final double barHeightF = 230.0;
 
   const FlexibleAppBarH();
 
@@ -46,6 +46,7 @@ class FlexibleAppBarH extends StatelessWidget {
                 "Transactions",
                 style: const TextStyle(color: Colors.black, fontSize: 18.0),
               ),
+
             )
           ],
         ),

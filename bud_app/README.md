@@ -1,6 +1,6 @@
 # bud_app
 
-budget helper (aplikacja do kontrolowania własnych finansów)
+budget helper (aplikacja do kontrolowania własnych finansów)  
 
 ## Getting Started
 

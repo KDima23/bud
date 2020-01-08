@@ -1,16 +1,35 @@
+import 'package:bud_app/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bud_app/forgot_password_page.dart';
 import 'package:bud_app/home_page.dart';
 import 'package:bud_app/signup_page.dart';
+import 'package:bud_app/loading.dart';
+
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
+  final Function toggleView;
+  LoginPage({ this.toggleView });
+
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final AuthService _auth = AuthService();
+  final _formKey = GlobalKey<FormState>();
+  String error = '';
+
+
+  String email = '';
+  String password = '';
+  bool loading = false;
+
+//  final AuthService _auth = AuthService();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,22 +41,38 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
             Center(child: Align(child: Image.asset('assets/budblue.png'))),
-            Container(
-              width: 320.0,
-              child: TextField(
-                  decoration: InputDecoration(
-                      hintText: "Email",
-                      hintStyle:
-                          TextStyle(color: Colors.grey, fontSize: 12.0))),
-            ),
-            Container(
-              width: 320.0,
-              child: TextField(
-                  decoration: InputDecoration(
-                      hintText: "Password",
-                      hintStyle:
-                          TextStyle(color: Colors.grey, fontSize: 12.0))),
-            ),
+            Container(child: Form(
+              key: _formKey,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    width: 320.0,
+                    child: TextFormField(validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                        onChanged: (val) {
+
+                          setState(() => email = val.trim());
+                    },
+                        decoration: InputDecoration(
+                            hintText: "Email",
+                            hintStyle:
+                            TextStyle(color: Colors.grey, fontSize: 12.0))),
+                  ),
+                  Container(
+                    width: 320.0,
+                    child: TextFormField(validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                        onChanged: (val) {
+                          setState(() => password = val.trim());
+                        },
+                        decoration: InputDecoration(
+                            hintText: "Password",
+                            hintStyle:
+                            TextStyle(color: Colors.grey, fontSize: 12.0))),
+                  ),
+
+                ],
+              ),
+            ),),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
@@ -76,8 +111,20 @@ class _LoginPageState extends State<LoginPage> {
                     )),
                 child: RaisedButton(
                   color: Colors.transparent,
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(HomePage.tag);
+                  onPressed: () async {
+                    if(_formKey.currentState.validate()){
+                      print("valid");
+//                      setState(() => loading = true);
+                      dynamic result = await _auth.signInWithEmailAndPassword(email, password);
+                      print(result);
+                      if(result == null) {
+                        setState(() {
+                          loading = false;
+                          error = 'Could not sign in with those credentials';
+                        });
+                      }
+                    }
+
                   },
                   textColor: Colors.white,
                   child: Text(
@@ -95,6 +142,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-void logIn() {
-  //Do something
-}

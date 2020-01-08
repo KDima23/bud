@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bud_app/login_page.dart';
+import 'package:bud_app/auth.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   static String tag = 'forgot-password-page';
@@ -9,6 +10,11 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
+  final AuthService _auth = AuthService();
+  String error = '';
+
+
+  String email = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +36,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
             Container(
               width: 320.0,
-              child: TextField(
+              child: TextFormField(validator: (val) => val.isEmpty ? 'Enter an email' : null,
+                  onChanged: (val) {
+
+                    setState(() => email = val.trim());
+                  },
                   decoration: InputDecoration(
                       hintText: "Email",
                       hintStyle:
@@ -52,7 +62,19 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     )),
                 child: RaisedButton(
                   color: Colors.transparent,
-                  onPressed: () {
+                  onPressed: () async {
+
+                      print("pepek");
+
+                      dynamic result = await _auth.resetPassword(email);
+//                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
+//                      Navigator.of(context).pushNamed(HomePage.tag);
+                      if(result == null) {
+                        setState(() {
+                          error = 'Please supply a valid email';
+                        });
+
+                    }
                     Navigator.of(context).pushNamed(LoginPage.tag);
                   },
                   textColor: Colors.white,

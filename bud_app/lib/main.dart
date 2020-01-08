@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:bud_app/forgot_password_page.dart';
+import 'forgot_password_page.dart';
+import 'settings_page.dart';
 import 'login_page.dart';
-import 'home_page.dart';
 import 'signup_page.dart';
-//import 'package:bud_app/settings_page.dart';
-//import 'analytic_dashboard_page.dart';
-//import 'invoice_scaner_page.dart';
+import 'home_page.dart';
+import 'analytic_dashboard_page.dart';
+import 'invoice_scaner_page.dart';
+import 'package:provider/provider.dart';
+import 'package:bud_app/user.dart';
+import 'package:bud_app/auth.dart';
+import 'package:bud_app/wrapper.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -15,10 +20,9 @@ class MyApp extends StatelessWidget {
     SignUpPage.tag: (context) => SignUpPage(),
     HomePage.tag: (context) => HomePage(),
     ForgotPasswordPage.tag: (context) => ForgotPasswordPage(),
-//    SettingsPage.tag: (context) => SettingsPage(),
-//    AnalyticDashboardPage.tag: (context) => AnalyticDashboardPage(),
-//    InvoiceScanerPage.tag: (context) => InvoiceScanerPage(),
-
+    SettingsPage.tag: (context) => SettingsPage(),
+    AnalyticDashboardPage.tag: (context) => AnalyticDashboardPage(),
+    InvoiceScanerPage.tag: (context) => InvoiceScanerPage(),
 
   };
 
@@ -26,14 +30,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'Noto_Sans'),
-      home: LoginPage(),
-      routes: routes,
+    return StreamProvider<User>.value(
+      value: AuthService().user,
+      child: MaterialApp(
+        home: Wrapper(),
+        routes: routes,
+      ),
     );
   }
 }
 
+//MaterialApp(
+//theme: ThemeData(fontFamily: 'Noto_Sans'),
+//home: LoginPage(),
+//routes: routes,
+//);
 /*
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);

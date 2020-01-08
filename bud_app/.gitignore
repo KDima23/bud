@@ -29,9 +29,6 @@
 .pub/
 /build/
 
-#JSON
-#**/android/app/google-services.json
-
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -64,6 +61,7 @@
 **/ios/Flutter/app.flx
 **/ios/Flutter/app.zip
 **/ios/Flutter/flutter_assets/
+**/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 
