@@ -16,7 +16,7 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 ## Limits of our data
-We can set your data limit with offline persistence, to use offline persistence, you don't need to make any changes to the code that you use to access Cloud Firestore data. With offline persistence enabled, the Cloud Firestore client library automatically manages online and offline data access and synchronizes local data when the device is back online.
+we can set the limit to our data with offline persistence, to use offline persistence, you don't need to make any changes to the code that you use to access Cloud Firestore data. With offline persistence enabled, the Cloud Firestore client library automatically manages online and offline data access and synchronizes local data when the device is back online.
 ### Configure offline persistence
 When you initialize Cloud Firestore, you can enable or disable offline persistence:
 For Android and iOS, offline persistence is enabled by default. To disable persistence, set the PersistenceEnabled option to false.
