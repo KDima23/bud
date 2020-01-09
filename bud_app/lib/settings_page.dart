@@ -1,6 +1,8 @@
 import 'package:bud_app/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:bud_app/auth.dart';
+import 'bottom_nav_bar_home.dart';
+
 
 class SettingsPage extends StatefulWidget {
   static String tag = 'settings-page';
@@ -91,55 +93,9 @@ class _SettingsPageState extends State<SettingsPage> {
             SizedBox(
               height: 70,
             ),
-            Container(
-              height: 42.0,
-              width: 275.0,
-              decoration: BoxDecoration(
-                  borderRadius: new BorderRadius.circular(30.0),
-                  gradient: LinearGradient(
-                    colors: <Color>[
-                      Colors.purpleAccent,
-                      Colors.blue[400],
-                    ],
-                  )),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.business_center),
-                    color: Colors.grey[700],
-                    onPressed: () {
-                      print("filled background");
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.equalizer),
-                    color: Colors.grey[700],
-                    onPressed: () {
-                      print("filled background");
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add_a_photo),
-                    color: Colors.grey[700],
-                    onPressed: () {
-                      print("filled background");
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.settings),
-                    color: Colors.grey[700],
-                    onPressed: () {
-                      print("filled background");
-                    },
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 5,
-            )
           ],
-        ));
+        ),
+      bottomNavigationBar: Container(child: BottomNavigationBarHome(),color: Colors.transparent,) ,
+    );
   }
 }

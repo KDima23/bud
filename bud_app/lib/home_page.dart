@@ -219,6 +219,7 @@ class Record {
   final String transaction_details;
   final String transaction_type;
   final int withdrawal_amt;
+  final String color;
 
   final DocumentReference reference;
 
@@ -229,13 +230,17 @@ class Record {
         assert(map['withdrawal_amt'] != null),
         assert(map['transaction_details'] != null),
         assert(map['transaction_type'] != null),
+        assert(map['color'] != null),
 
-        account_No = map['account_No'],
+
+      account_No = map['account_No'],
         date = map['date'],
         deposit_amt = map['deposit_amt'],
         withdrawal_amt = map['withdrawal_amt'],
         transaction_details = map['transaction_details'],
-        transaction_type = map['transaction_type'];
+        transaction_type = map['transaction_type'],
+        color = map['color'];
+
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
