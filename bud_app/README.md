@@ -22,6 +22,7 @@ When you initialize Cloud Firestore, you can enable or disable offline persisten
 For Android and iOS, offline persistence is enabled by default. To disable persistence, set the PersistenceEnabled option to false.
 For the web, offline persistence is disabled by default. To enable persistence, call the enablePersistence method. Cloud Firestore's cache isn't automatically cleared between sessions. Consequently, if your web app handles sensitive information, make sure to ask the user if they're on a trusted device before enabling persistence.
 you can use offline persistence, like this:
+```
 database.setPersistenceEnabled(true);
 database.setPersistenceCacheSizeBytes(10000000);
-
+```
