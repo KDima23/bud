@@ -8,11 +8,29 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class AnalyticDashboardPage extends StatefulWidget {
   static String tag = 'analytic-dashboard-page';
+
   @override
   _AnalyticDashboardPageState createState() => _AnalyticDashboardPageState();
 }
 
 class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
+  List<charts.Series<Record, String>> _seriesPieData;
+  List<Record> mydata;
+  _generateData(mydata) {
+    _seriesPieData = List<charts.Series<Record, String>>();
+    _seriesPieData.add(
+      charts.Series(
+        domainFn: (Record record, _) => record.transaction_type,
+        measureFn: (Record record, _) => record.withdrawal_amt,
+        colorFn: (Record record, _) =>
+            charts.ColorUtil.fromDartColor(Colors.green),
+        id: 'tasks',
+        data: mydata,
+        labelAccessorFn: (Record row, _) => "${row.transaction_type}",
+      ),
+    );
+  }
+
 //  HomePage homePage;
 
   @override

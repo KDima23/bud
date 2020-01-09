@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('baby').snapshots(),
+      stream: Firestore.instance.collection('Transactions').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
 
@@ -70,13 +70,11 @@ class _HomePageState extends State<HomePage> {
 
   }
 
-  Widget transactionCard(BuildContext context, DocumentSnapshot data) {
-
-
+  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final record = Record.fromSnapshot(data);
 
     return Padding(
-      key: ValueKey(record.name),
+      key: ValueKey(record.transaction_details),
       padding: const EdgeInsets.only(bottom: 6.0),
       child: Material(
         color: Colors.white,
@@ -84,26 +82,69 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
           padding: EdgeInsets.all(6.0),
           child: transActions(
-            record.name,
-            record.name,
-            record.name,
-            record.name,
+            record.transaction_type,
+            record.transaction_details,
+            record.date.toString(),
+            record.deposit_amt,
+            record.withdrawal_amt,
           ),
         ),
       ),
     );
   }
 
-  Center transActions(String iconVal, String transactionType,
-      String transactionCount, String transactionVal) {
+  Center transActions(String iconVal, String transaction_details,
+      String date, int deposit_amt, int withdrawal_amt ) {
+
+
+
+    switch (iconVal) {
+      case 'Utilities':
+        iconVal = "assets/images/home_24px.png";
+        break;
+      case 'Entertainment':
+        iconVal = "assets/images/extension_24px.png";
+        break;
+      case 'Health':
+        iconVal = "assets/images/favorite_border_24px.png";
+        break;
+      case 'Restaurants':
+        iconVal = "assets/images/restaurant_24px.png";
+        break;
+
+      case 'Shopping':
+        iconVal = "assets/images/shopping_basket_24px.png";
+        break;
+      case 'Cash':
+        iconVal = "assets/images/account_balance_wallet_24px.png";
+        break;
+      case 'Transport':
+        iconVal = "assets/images/bus_24px.png";
+        break;
+      case 'Travel':
+        iconVal = "assets/images/publicon_social_24px.png";
+        break;
+      case 'Transfers':
+        iconVal = "assets/images/swap_horiz_24px.png";
+        break;
+      case 'Groceries':
+        iconVal = "assets/images/local_grocery_store_24px.png";
+        break;
+
+
+      default:
+        print("ppp");
+
+    }
+
     return Center(
       child: Column(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              leadingDetails(iconVal, transactionType, transactionCount),
-              transactionValue(transactionVal),
+              leadingDetails(iconVal, transaction_details, date),
+              transactionValue(deposit_amt, withdrawal_amt),
             ],
           )
         ],
@@ -112,7 +153,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget leadingDetails(
-      String iconVal, String transactionType, String transactionCount) {
+      String iconVal, String transaction_details, String date) {
     return Container(
       child: Row(
         children: <Widget>[
@@ -129,13 +170,13 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Container(
                 child: Text(
-                  transactionType,
+                  transaction_details,
                   style: TextStyle(color: Colors.black, fontSize: 20.0),
                 ),
               ),
               Container(
                 child: Text(
-                  transactionCount + " TXN",
+                  date,
                   style: TextStyle(color: Colors.grey[400], fontSize: 12.0),
                 ),
               )
@@ -146,62 +187,64 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget transactionValue(String transactionVal) {
+  Widget transactionValue(int deposit_amt, int withdrawal_amt) {
+    String transactionVal;
+    bool variable;
+    if(withdrawal_amt == 0 && deposit_amt != 0){
+      variable = true;
+
+      transactionVal = deposit_amt.toString();
+
+
+    }else{
+      transactionVal= withdrawal_amt.toString();
+      variable = false;
+    }
     return Container(
       child: Text(
         "\u0024" + transactionVal,
-        style: TextStyle(color: Colors.blue, fontSize: 20.0),
+        style: TextStyle(color: variable ? Colors.blue : Colors.red, fontSize: 20.0),
       ),
     );
   }
 
-  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-    final record = Record.fromSnapshot(data);
 
-    return Padding(
-      key: ValueKey(record.name),
-      padding: const EdgeInsets.only(bottom: 6.0),
-      child: Material(
-        color: Colors.white,
-        shadowColor: Colors.grey[200],
-        child: Padding(
-          padding: EdgeInsets.all(6.0),
-          child: transActions(
-            "assets/images/home_24px.png",
-            record.name,
-            record.votes.toString(),
-            record.date.toString(),
-          ),
-        ),
-      ),
-    );
-  }
 
 }
 
 class Record {
-  final String name;
-  final int votes;
   final int account_No;
-  final int date;
+  final String date;
+  final int deposit_amt;
+  final String transaction_details;
+  final String transaction_type;
+  final int withdrawal_amt;
 
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        assert(map['votes'] != null),
-        assert(map['account_No'] != null),
+      : assert(map['account_No'] != null),
         assert(map['date'] != null),
-        name = map['name'],
-        votes = map['votes'],
+        assert(map['deposit_amt'] != null),
+        assert(map['withdrawal_amt'] != null),
+        assert(map['transaction_details'] != null),
+        assert(map['transaction_type'] != null),
+
         account_No = map['account_No'],
-        date = map['date'];
+        date = map['date'],
+        deposit_amt = map['deposit_amt'],
+        withdrawal_amt = map['withdrawal_amt'],
+        transaction_details = map['transaction_details'],
+        transaction_type = map['transaction_type'];
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
-  @override
-  String toString() => "Record<$name:$votes>";
+//  @override
+//  String toString() => "Record<$transaction_details:$transaction_type>";
+
 }
+
+
 
 
