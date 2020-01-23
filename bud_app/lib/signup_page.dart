@@ -127,7 +127,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       print(password);
                       dynamic result = await _auth.registerWithEmailAndPassword(email, password);
 //                      dynamic result = await _auth.registerWithEmailAndPassword(email, password);
-//                      Navigator.of(context).pushNamed(HomePage.tag);
+                      Navigator.of(context).pushNamed(HomePage.tag);
                       if(result == null) {
                         setState(() {
                           error = 'Please supply a valid email';

@@ -44,7 +44,7 @@ class FlexibleAppBarH extends StatelessWidget {
             Container(
               child: new Text(
                 "Transactions",
-                style: const TextStyle(color: Colors.black, fontSize: 18.0),
+                style: const TextStyle(color: Colors.black, fontSize: 20.0),
               ),
 
             )

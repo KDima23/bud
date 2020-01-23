@@ -7,6 +7,9 @@ import 'flexible_app_bar.dart';
 
 import 'bottom_nav_bar_home.dart';
 
+import 'package:firebase_admob/firebase_admob.dart';
+
+
 class HomePage extends StatefulWidget {
   static String tag = 'home-page';
 
@@ -17,6 +20,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+
+
+//    FirebaseAdMob.instance.initialize(appId: "ca-app-pub-8726446236198606~2135906039").then((response){
+//      myBanner..load()..show();
+//    });
+
 //    final record = Record.fromSnapshot(data);
 
     return Scaffold(
@@ -203,7 +212,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       child: Text(
         "\u0024" + transactionVal,
-        style: TextStyle(color: variable ? Colors.blue : Colors.red, fontSize: 20.0),
+        style: TextStyle(color: variable ? Colors.green : Colors.blue, fontSize: 20.0),
       ),
     );
   }
@@ -250,6 +259,26 @@ class Record {
 
 }
 
-
-
+//MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+//  keywords: <String>['flutterio', 'beautiful apps'],
+//  contentUrl: 'https://flutter.io',
+//
+//  birthday: DateTime.now(),
+//  childDirected: false,
+//  designedForFamilies: false,
+//  gender: MobileAdGender.male, // or MobileAdGender.female, MobileAdGender.unknown
+//  testDevices: <String>[], // Android emulators are considered test devices
+//);
+//
+//BannerAd myBanner = BannerAd(
+//  // Replace the testAdUnitId with an ad unit id from the AdMob dash.
+//  // https://developers.google.com/admob/android/test-ads
+//  // https://developers.google.com/admob/ios/test-ads
+//  adUnitId: BannerAd.testAdUnitId,
+//  size: AdSize.smartBanner,
+//  targetingInfo: targetingInfo,
+//  listener: (MobileAdEvent event) {
+//    print("BannerAd event is $event");
+//  },
+//);
 

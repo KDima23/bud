@@ -1,3 +1,4 @@
+import 'package:bud_app/change_limit.dart';
 import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'package:bud_app/app_bar.dart';
@@ -7,15 +8,27 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
-
 class AnalyticDashboardPage extends StatefulWidget {
   static String tag = 'analytic-dashboard-page';
+
+//  final Limits value;
+//
+//  AnalyticDashboardPage({Key key, this.value}) : super(key: key);
 
   @override
   _AnalyticDashboardPageState createState() => _AnalyticDashboardPageState();
 }
 
 class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
+
+
+
+  final lim = Limits();
+  var limits = 450;
+
+
+
+
   List<charts.Series<Record, String>> _seriesPieData;
   List<Record> mydata;
   _generateData(mydata) {
@@ -38,7 +51,7 @@ class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
 //      backgroundColor: Colors.grey[200],
-      body: CustomScrollView(
+      body: CustomScrollView(scrollDirection: Axis.vertical,
         slivers: <Widget>[
           SliverAppBar(
             title: AppBarH(),
@@ -50,6 +63,10 @@ class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
               background: _buildBody(context),
             ),
           ),
+
+
+
+
 
           SliverToBoxAdapter(child: SizedBox(
             height: 1000,
@@ -129,6 +146,7 @@ class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
   }
 
   Widget _buildBody2(BuildContext context) {
+    print(context);
     return StreamBuilder<QuerySnapshot>(
       stream: Firestore.instance.collection('Transactions').snapshots(),
       builder: (context, snapshot) {
@@ -140,12 +158,14 @@ class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
   }
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-    return ListView(
+    return ListView(scrollDirection: Axis.vertical,
       padding: const EdgeInsets.only(top: 10.0),
       children: snapshot.map((data) => _buildListItem(context, data)).toList(),
     );
 
   }
+
+
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final record = Record.fromSnapshot(data);
@@ -160,7 +180,7 @@ class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
           padding: EdgeInsets.all(6.0),
           child: transActions(
             record.transaction_type,
-            record.transaction_details,
+            record.transaction_type,
             record.date.toString(),
             record.deposit_amt,
             record.withdrawal_amt,
@@ -231,15 +251,18 @@ class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
 
   Widget leadingDetails(
       String iconVal, String transaction_details, String date) {
+
+
     return Container(
       child: Row(
         children: <Widget>[
-          Container(
+          GestureDetector(onTap: () {
+            Navigator.of(context).pushNamed(ChangeLimitPage.tag);
+          },
             child: Image(
-              image: AssetImage(iconVal),
-              height: 50.0,
-            ),
-          ),
+            image: AssetImage(iconVal),
+            height: 50.0,
+          ),),
           SizedBox(
             width: 10.0,
           ),
@@ -267,6 +290,13 @@ class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
   Widget transactionValue(int deposit_amt, int withdrawal_amt) {
     String transactionVal;
     bool variable;
+    Color variab;
+    Color colorekred = Colors.red;
+    Color colorekblue = Colors.blue;
+
+
+
+
     if(withdrawal_amt == 0 && deposit_amt != 0){
       variable = true;
 
@@ -275,12 +305,29 @@ class _AnalyticDashboardPageState extends State<AnalyticDashboardPage> {
 
     }else{
       transactionVal= withdrawal_amt.toString();
+      var llp =lim.limitU;
+
+      print("dsdsd");
+      print(llp);
+      print("ddpp");
+
+      print(lim.limitU);
+
+      if(withdrawal_amt > limits){
+        variab = colorekblue;
+        print("dsdsd");
+        print(lim.limitU);
+      }else{
+        variab = colorekred;
+      }
+
+
       variable = false;
     }
     return Container(
       child: Text(
         "\u0024" + transactionVal,
-        style: TextStyle(color: variable ? Colors.blue : Colors.red, fontSize: 20.0),
+        style: TextStyle(color: variable ? Colors.green : variab, fontSize: 20.0),
       ),
     );
   }

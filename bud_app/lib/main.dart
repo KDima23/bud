@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:bud_app/user.dart';
 import 'package:bud_app/auth.dart';
 import 'package:bud_app/wrapper.dart';
+import 'package:bud_app/change_limit.dart';
 
 
 void main() => runApp(MyApp());
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
     SettingsPage.tag: (context) => SettingsPage(),
     AnalyticDashboardPage.tag: (context) => AnalyticDashboardPage(),
     InvoiceScanerPage.tag: (context) => InvoiceScanerPage(),
+    ChangeLimitPage.tag: (context) => ChangeLimitPage(),
+
 
   };
 

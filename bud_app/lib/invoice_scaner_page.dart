@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 //import 'package:flutter_camera_ml_vision/flutter_camera_ml_vision.dart';
 import 'bottom_nav_bar_home.dart';
+import 'package:firebase_admob/firebase_admob.dart';
+
 
 class InvoiceScanerPage extends StatefulWidget {
   static String tag = 'invoice-scaner-page';
@@ -13,6 +15,9 @@ class InvoiceScanerPage extends StatefulWidget {
 class _InvoiceScanerPageState extends State<InvoiceScanerPage> {
   @override
   Widget build(BuildContext context) {
+    FirebaseAdMob.instance.initialize(appId: "ca-app-pub-8726446236198606~2135906039").then((response){
+      myBanner..load()..show();
+    });
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Column(
@@ -51,3 +56,26 @@ class _InvoiceScanerPageState extends State<InvoiceScanerPage> {
     );
   }
 }
+
+MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+  keywords: <String>['flutterio', 'beautiful apps'],
+  contentUrl: 'https://flutter.io',
+
+  birthday: DateTime.now(),
+  childDirected: false,
+  designedForFamilies: false,
+  gender: MobileAdGender.male, // or MobileAdGender.female, MobileAdGender.unknown
+  testDevices: <String>[], // Android emulators are considered test devices
+);
+
+BannerAd myBanner = BannerAd(
+  // Replace the testAdUnitId with an ad unit id from the AdMob dash.
+  // https://developers.google.com/admob/android/test-ads
+  // https://developers.google.com/admob/ios/test-ads
+  adUnitId: BannerAd.testAdUnitId,
+  size: AdSize.smartBanner,
+  targetingInfo: targetingInfo,
+  listener: (MobileAdEvent event) {
+    print("BannerAd event is $event");
+  },
+);
